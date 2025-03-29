@@ -1,4 +1,4 @@
-# Proyecto KAT - Trivia sobre Lionel Messi
+# Preguntas sobre Lionel Messi
 
 ## Descripción del Proyecto
 

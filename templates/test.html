@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Test de Messi</h1>
+    <form method="POST">
+        {% for pregunta in preguntas %}
+        <div class="pregunta">
+            <h3>{{ pregunta.texto }}</h3>
+            <div class="opciones">
+                <label>
+                    <input type="radio" name="respuesta" value="1" required>
+                    {{ pregunta.opcion1 }}
+                </label>
+                <label>
+                    <input type="radio" name="respuesta" value="2">
+                    {{ pregunta.opcion2 }}
+                </label>
+                <label>
+                    <input type="radio" name="respuesta" value="3">
+                    {{ pregunta.opcion3 }}
+                </label>
+                <label>
+                    <input type="radio" name="respuesta" value="4">
+                    {{ pregunta.opcion4 }}
+                </label>
+            </div>
+            <input type="hidden" name="pregunta_id" value="{{ pregunta.id }}">
+            <button type="submit">Enviar Respuesta</button>
+        </div>
+        {% endfor %}
+    </form>
+{% endblock %} 

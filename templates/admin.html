@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Panel de Administración</h1>
+    <form method="POST">
+        <label for="texto">Pregunta:</label>
+        <input type="text" id="texto" name="texto" required>
+        
+        <label for="opcion1">Opción 1:</label>
+        <input type="text" id="opcion1" name="opcion1" required>
+        
+        <label for="opcion2">Opción 2:</label>
+        <input type="text" id="opcion2" name="opcion2" required>
+        
+        <label for="opcion3">Opción 3:</label>
+        <input type="text" id="opcion3" name="opcion3" required>
+        
+        <label for="opcion4">Opción 4:</label>
+        <input type="text" id="opcion4" name="opcion4" required>
+        
+        <label for="respuesta_correcta">Respuesta Correcta:</label>
+        <select id="respuesta_correcta" name="respuesta_correcta" required>
+            <option value="1">Opción 1</option>
+            <option value="2">Opción 2</option>
+            <option value="3">Opción 3</option>
+            <option value="4">Opción 4</option>
+        </select>
+        
+        <button type="submit">Agregar Pregunta</button>
+    </form>
+    
+    <h2>Preguntas Existentes</h2>
+    <table>
+        <tr>
+            <th>Pregunta</th>
+            <th>Opción 1</th>
+            <th>Opción 2</th>
+            <th>Opción 3</th>
+            <th>Opción 4</th>
+            <th>Respuesta Correcta</th>
+            <th>Acciones</th>
+        </tr>
+        {% for pregunta in preguntas %}
+        <tr>
+            <td>{{ pregunta.texto }}</td>
+            <td>{{ pregunta.opcion1 }}</td>
+            <td>{{ pregunta.opcion2 }}</td>
+            <td>{{ pregunta.opcion3 }}</td>
+            <td>{{ pregunta.opcion4 }}</td>
+            <td>{{ pregunta.respuesta_correcta }}</td>
+            <td class="acciones">
+                <button type="submit" form="editar-form-{{ pregunta.id }}" name="editar" value="{{ pregunta.id }}">Editar</button>
+                <button type="submit" form="eliminar-form-{{ pregunta.id }}" name="eliminar" value="{{ pregunta.id }}" onclick="return confirm('¿Estás seguro de que quieres eliminar esta pregunta?')">Eliminar</button>
+                <form id="editar-form-{{ pregunta.id }}" method="POST" style="display: none;"></form>
+                <form id="eliminar-form-{{ pregunta.id }}" method="POST" style="display: none;"></form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

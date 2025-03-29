@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Clasificación</h1>
+    <table>
+        <tr>
+            <th>Usuario</th>
+            <th>Respuestas Correctas</th>
+            <th>Total Respuestas</th>
+        </tr>
+        {% for resultado in resultados %}
+        <tr>
+            <td>{{ resultado.email }}</td>
+            <td>{{ resultado.respuestas_correctas }}</td>
+            <td>{{ resultado.total_respuestas }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %} 

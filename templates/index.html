@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="respuestas-correctas" data-respuestas="{{ preguntas|map(attribute='respuesta_correcta')|list|tojson }}" style="display: none;"></div>
+    <div id="pregunta-actual" data-pregunta-actual="{{ pregunta_actual }}" style="display: none;"></div>
+    
+    <div class="presentacion">
+        <h1>Test de Messi</h1>
+    </div>
+    
+    <div class="test-container">
+        <h2>¿Cuánto sabes sobre Messi?</h2>
+        {% if preguntas %}
+            {% if pregunta_actual == 0 %}
+                <button class="comenzar-btn">Comenzar Test</button>
+            {% endif %}
+            <div class="pregunta" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%;"></div>
+                    </div>
+                    <div class="timer">30</div>
+                </div>
+                <form method="POST" action="{{ url_for('index') }}" class="preguntas-form">
+                    <h3>{{ preguntas[pregunta_actual].texto }}</h3>
+                    <div class="contador-preguntas">
+                        Pregunta {{ pregunta_actual + 1 }} de {{ total_preguntas }}
+                    </div>
+                    <div class="opciones">
+                        <label>
+                            <input type="radio" name="respuesta_{{ preguntas[pregunta_actual].id }}" value="1" required>
+                            {{ preguntas[pregunta_actual].opcion1 }}
+                        </label>
+                        <label>
+                            <input type="radio" name="respuesta_{{ preguntas[pregunta_actual].id }}" value="2">
+                            {{ preguntas[pregunta_actual].opcion2 }}
+                        </label>
+                        <label>
+                            <input type="radio" name="respuesta_{{ preguntas[pregunta_actual].id }}" value="3">
+                            {{ preguntas[pregunta_actual].opcion3 }}
+                        </label>
+                        <label>
+                            <input type="radio" name="respuesta_{{ preguntas[pregunta_actual].id }}" value="4">
+                            {{ preguntas[pregunta_actual].opcion4 }}
+                        </label>
+                    </div>
+                    <input type="hidden" name="pregunta_id" value="{{ preguntas[pregunta_actual].id }}">
+                    <button type="button" class="siguiente-btn">Siguiente</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="completado">
+                <h2>¡Felicidades! Has completado el cuestionario.</h2>
+                <p>Respondiste todas las {{ total_preguntas }} preguntas.</p>
+                <a href="{{ url_for('clasificacion') }}" class="btn-clasificacion">Ver Clasificación</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <section class="ubicacion">
+        <h2>Lugares clave en la carrera de Messi</h2>
+        <p>Explora los lugares más importantes en la trayectoria futbolística de Lionel Messi</p>
+        <div id="map"></div>
+    </section>
+    
+    <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/test.js') }}"></script>
+{% endblock %} 

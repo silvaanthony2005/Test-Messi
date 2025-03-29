@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messi Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <nav>
+        <img src="{{ url_for('static', filename='img/messi_icon.png') }}" alt="Messi Icon" class="logo">
+        <div class="enlaces">
+            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="{{ url_for('clasificacion') }}">Clasificación</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}">Cerrar Sesión</a>
+                {% if current_user.es_admin %}
+                    <a href="{{ url_for('admin_panel') }}">Admin</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+                <a href="{{ url_for('registro') }}">Registrarse</a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <p>Messi Store © 2023 - Todos los derechos reservados</p>
+        <p>Ubicación: Buenos Aires, Argentina</p>
+    </footer>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/02/26/04/20250226041404-8KJ7JC7B.js"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html> 
